@@ -1,0 +1,8 @@
+INFO 2025-07-17 07:21:19,550 autoreload Watching for file changes with StatReloader
+INFO 2025-07-17 07:21:21,740 basehttp "GET / HTTP/1.1" 200 1924
+INFO 2025-07-17 07:21:22,678 basehttp "GET /api/students/ HTTP/1.1" 200 483
+INFO 2025-07-17 07:21:22,678 basehttp "GET /api/books/ HTTP/1.1" 200 667
+INFO 2025-07-17 07:21:22,713 basehttp "GET /api/bookloans/ HTTP/1.1" 200 389
+INFO 2025-07-17 07:21:23,579 basehttp "GET /static/pages/LoanForm.vue HTTP/1.1" 304 0
+INFO 2025-07-17 07:21:29,468 basehttp "GET /api/bookloans/?student_id=9&book_id=12&return_date__isnull=true HTTP/1.1" 200 389
+INFO 2025-07-17 07:21:49,672 autoreload D:\development\work\test Code\test_proj\project\project\settings.py changed, reloading.
