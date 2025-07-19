@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+   <html>
+   <head>
+     <title>Book Loan Admin Panel</title>
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+   </head>
+   <body>
+     <div id="app"></div>
+     <script>
+       // Configure CSRF for all Axios requests
+       axios.defaults.xsrfCookieName = 'csrftoken';
+       axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+
+       const { createApp, defineAsyncComponent } = Vue;
+
+       const app = createApp({
+         template: `<admin-book-loan></admin-book-loan>`,
+         components: {
+           'admin-book-loan': defineAsyncComponent(() =>
+             fetch('/static/pages/AdminBookLoan.vue')
+               .then(response => {
+                 if (!response.ok) throw new Error('Failed to load AdminBookLoan.vue');
+                 return response.text();
+               })
+               .then(text => {
+                 const templateMatch = text.match(/<template>([\s\S]*?)<\/template>/);
+                 const scriptMatch = text.match(/<script>([\s\S]*?)<\/script>/);
+                 if (!templateMatch || !scriptMatch) throw new Error('Invalid .vue file format');
+                 const template = templateMatch[1];
+                 const scriptContent = scriptMatch[1];
+                 const component = eval(`(() => {${scriptContent}; return component;})()`);
+                 component.template = template;
+                 return component;
+               })
+               .catch(error => {
+                 console.error('Error loading component:', error);
+                 return { template: '<div>Error loading admin panel: ' + error.message + '</div>' };
+               })
+           )
+         }
+       });
+
+       app.mount('#app');
+     </script>
+   </body>
+   </html>
